@@ -60,6 +60,19 @@ def delete_user(user_id: int):
     return {'message': 'User deleted'}
 
 
+@app.get('/users/{user_id}', response_model=UserList)
+def read_user_resources(user_id: int):
+
+    if user_id < 1 or user_id > len(database):
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND, detail='User not found'
+        )
+
+    user_with_id = database[user_id - 1]
+
+    return user_with_id
+
+
 @app.get('/message', status_code=HTTPStatus.OK, response_class=HTMLResponse)
 def read_html():
     return """
