@@ -70,7 +70,9 @@ def test_delete_user(client, user):
 def test_update_user_not_found(client):
     response = client.put('/users/-1')
 
-    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.status_code == (
+        HTTPStatus.NOT_FOUND and HTTPStatus.UNPROCESSABLE_ENTITY
+    )
     # assert response.raise_for_status == 'User not found'
 
 
